@@ -10,7 +10,9 @@
   "license": "MIT",
   "require": {
     "php": "^7.0",
-    "happyr/linkedin-api-client": "^1.0"
+    "happyr/linkedin-api-client": "^1.0",
+    "php-http/message": "^1.7",
+    "php-http/cakephp-adapter": "^0.2"
   },
   "require-dev": {
     "cakephp/cakephp": "^3.6"
