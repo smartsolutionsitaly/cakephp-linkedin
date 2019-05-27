@@ -1,0 +1,44 @@
+{
+  "name": "smartsolutionsitaly/cakephp-linkedin",
+  "description": "LinkedIn client for CakePHP",
+  "keywords": [
+    "cakephp",
+    "linkedin",
+    "client"
+  ],
+  "type": "cakephp-plugin",
+  "license": "MIT",
+  "require": {
+    "php": "^7.0",
+    "happyr/linkedin-api-client": "^1.0"
+  },
+  "require-dev": {
+    "cakephp/cakephp": "^3.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "SmartSolutionsItaly\\CakePHP\\LinkedIn\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SmartSolutionsItaly\\CakePHP\\LinkedIn\\Test\\": "tests",
+      "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+    }
+  },
+  "homepage": "https://github.com/smartsolutionsitaly/cakephp-linkedin",
+  "authors": [
+    {
+      "name": "Lucio Benini",
+      "email": "dev@smartsolutions.it",
+      "homepage": "https://smartsolutions.it",
+      "role": "Web Developer"
+    }
+  ],
+  "support": {
+    "email": "info@smartsolutions.it",
+    "issues": "https://github.com/smartsolutionsitaly/cakephp-linkedin/issues",
+    "wiki": "https://github.com/smartsolutionsitaly/cakephp-linkedin/wiki",
+    "source": "https://github.com/smartsolutionsitaly/cakephp-linkedin"
+  }
+}
