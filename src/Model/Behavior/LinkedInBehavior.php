@@ -89,6 +89,8 @@ class LinkedInBehavior extends Behavior
                             $client->setToken($row['linkedin']['token']);
                             $row['linkedin']['statuses'] = $client->getCompanyStatuses($row['linkedin']['company'], $count, true);
                         }
+
+                        unset($row['linkedin']['token']);
                     }
 
                     return $row;
