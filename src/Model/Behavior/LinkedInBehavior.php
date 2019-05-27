@@ -76,7 +76,7 @@ class LinkedInBehavior extends Behavior
      */
     public function findCompanyStatuses(Query $query, array $options): Query
     {
-        $count = !empty($options['count']) ? (int)$options['count'] : 20;
+        $count = !empty($options['count']) ? (int)$options['count'] : 10;
 
         return $query
             ->formatResults(function (CollectionInterface $results) use ($count) {
