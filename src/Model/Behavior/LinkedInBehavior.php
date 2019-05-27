@@ -44,7 +44,7 @@ class LinkedInBehavior extends Behavior
      * @param array $options Query options. Usually empty.
      * @return Query The query object.
      */
-    public function findCompanies(Query $query, array $options)
+    public function findCompanies(Query $query, array $options): Query
     {
         return $query
             ->formatResults(function (CollectionInterface $results) {
@@ -77,7 +77,7 @@ class LinkedInBehavior extends Behavior
      * @param array $options Query options. May contains "count" elements.
      * @return Query The query object.
      */
-    public function findCompanyStatuses(Query $query, array $options)
+    public function findCompanyStatuses(Query $query, array $options): Query
     {
         $count = !empty($options['count']) ? (int)$options['count'] : 20;
 
@@ -85,19 +85,13 @@ class LinkedInBehavior extends Behavior
             ->formatResults(function (CollectionInterface $results) use ($count) {
                 return $results->map(function ($row) use ($count) {
                     if (!empty($row['linkedin'])) {
-                        $res = [];
+                        $row['linkedin']['statuses'] = [];
 
                         if (!empty($row['linkedin']['token']) && !empty($row['linkedin']['company'])) {
                             $client = new LinkedInClient();
                             $client->setToken($row['linkedin']['token']);
-                            $results = $client->getCompanyStatuses($row['linkedin']['company'], $count);
-
-                            if (!empty($results['values'])) {
-                                $res = Hash::combine($results['values'], '{n}.updateContent.companyStatusUpdate.share.id', '{n}.updateContent.companyStatusUpdate.share.content');
-                            }
+                            $row['linkedin']['statuses'] = $client->getCompanyStatuses($row['linkedin']['company'], $count, true);
                         }
-
-                        $row['linkedin']['statuses'] = $res;
                     }
 
                     return $row;

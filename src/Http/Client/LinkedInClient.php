@@ -86,13 +86,34 @@ class LinkedInClient
      * Gets the status updates of a company page.
      * @param string $id The page's ID.
      * @param int $count The count of the maximum retrieved results.
+     * @param bool $format A value indicating whether the results have to be formatted.
      * @return array The status updates of a company page.
      * @since 1.0.0
      */
-    public function getCompanyStatuses(string $id, int $count = 1): array
+    public function getCompanyStatuses(string $id, int $count = 1, bool $format = false): array
     {
         try {
-            return $this->_client->get('v1/companies/' . $id . '/updates?event-type=status-update&count=' . $count);
+            $results = $this->_client->get('v1/companies/' . $id . '/updates?event-type=status-update&count=' . $count);
+
+            if ($format && !empty($results['values'])) {
+                foreach ($results['values'] as $value) {
+                    $res[] = [
+                        'id' => $value['updateContent']['companyStatusUpdate']['share']['id'],
+                        'company_id' => $value['updateContent']['company']['id'],
+                        'company_name' => $value['updateContent']['company']['name'],
+                        'company_url' => 'https://www.linkedin.com/company/' . $value['updateContent']['company']['id'],
+                        'likes' => (int)$value['numLikes'],
+                        'comment' => $value['updateContent']['companyStatusUpdate']['share']['comment'],
+                        'title' => $value['updateContent']['companyStatusUpdate']['share']['content']['title'],
+                        'description' => $value['updateContent']['companyStatusUpdate']['share']['content']['description'],
+                        'image_thumbnail' => $value['updateContent']['companyStatusUpdate']['share']['content']['thumbnailUrl'],
+                        'image' => $value['updateContent']['companyStatusUpdate']['share']['content']['submittedImageUrl'],
+                        'share_url' => $value['updateContent']['companyStatusUpdate']['share']['content']['submittedUrl']
+                    ];
+                }
+            }
+
+            return $results;
         } catch (\Exception $ex) {
             return [];
         }
