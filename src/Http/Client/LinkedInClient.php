@@ -96,6 +96,8 @@ class LinkedInClient
             $results = $this->_client->get('v1/companies/' . $id . '/updates?event-type=status-update&count=' . $count);
 
             if ($format && !empty($results['values'])) {
+                $res = [];
+
                 foreach ($results['values'] as $value) {
                     $res[] = [
                         'id' => $value['updateContent']['companyStatusUpdate']['share']['id'],
@@ -111,9 +113,11 @@ class LinkedInClient
                         'share_url' => $value['updateContent']['companyStatusUpdate']['share']['content']['submittedUrl']
                     ];
                 }
-            }
 
-            return $results;
+                return $res;
+            } else {
+                return $results;
+            }
         } catch (\Exception $ex) {
             return [];
         }
