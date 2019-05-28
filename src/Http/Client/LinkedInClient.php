@@ -21,6 +21,7 @@
 namespace SmartSolutionsItaly\CakePHP\LinkedIn\Http\Client;
 
 use Cake\Core\Configure;
+use Cake\Utility\Hash;
 
 /**
  * LinkedIn client.
@@ -100,17 +101,17 @@ class LinkedInClient
 
                 foreach ($results['values'] as $value) {
                     $res[] = [
-                        'id' => $value['updateContent']['companyStatusUpdate']['share']['id'],
+                        'id' => Hash::get($value, 'updateContent.companyStatusUpdate.share.id'),
                         'company_id' => $value['updateContent']['company']['id'],
                         'company_name' => $value['updateContent']['company']['name'],
                         'company_url' => 'https://www.linkedin.com/company/' . $value['updateContent']['company']['id'],
                         'likes' => (int)$value['numLikes'],
-                        'comment' => $value['updateContent']['companyStatusUpdate']['share']['comment'],
-                        'title' => $value['updateContent']['companyStatusUpdate']['share']['content']['title'],
-                        'description' => $value['updateContent']['companyStatusUpdate']['share']['content']['description'],
-                        'image_thumbnail' => $value['updateContent']['companyStatusUpdate']['share']['content']['thumbnailUrl'],
-                        'image' => $value['updateContent']['companyStatusUpdate']['share']['content']['submittedImageUrl'],
-                        'share_url' => $value['updateContent']['companyStatusUpdate']['share']['content']['submittedUrl']
+                        'comment' => Hash::get($value, 'updateContent.companyStatusUpdate.share.comment'),
+                        'title' => Hash::get($value, 'updateContent.companyStatusUpdate.share.content.title'),
+                        'description' => Hash::get($value, 'updateContent.companyStatusUpdate.share.content.description'),
+                        'image_thumbnail' => Hash::get($value, 'updateContent.companyStatusUpdate.share.content.thumbnailUrl'),
+                        'image' => Hash::get($value, 'updateContent.companyStatusUpdate.share.content.submittedImageUrl'),
+                        'share_url' => Hash::get($value, 'updateContent.companyStatusUpdate.share.content.submittedUrl'),
                     ];
                 }
 
